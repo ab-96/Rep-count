@@ -1,0 +1,23 @@
+var zero = Puck.mag();
+var doorOpen = false;
+ var isRep = false;
+function onMag(p) {
+  p.x -= zero.x;
+  p.y -= zero.y;
+  p.z -= zero.z;
+  var s = Math.sqrt(p.x*p.x + p.y*p.y + p.z*p.z);
+  var h = Math.floor(s);
+  console.log(h);
+  
+  console.log(isRep);
+
+  if(!isRep){
+    if (h > 500){
+      isRep = true;
+      console.log("Rep counted"); 
+   }
+  }
+}
+
+Puck.on('mag', onMag);
+Puck.magOn();
