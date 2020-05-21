@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btnId">Go</button>
+  <script src="https://www.puck-js.com/puck.js"></script>
+  <script>
+    var connection;
+    document.getElementById("btnId").addEventListener("click", function () {
+      if (connection) {
+        connection.close();
+        connection = undefined;
+      }
+      Puck.connect(function (c) {
+        if (!c) {
+          alert("Couldn't connect!");
+          return;
+        }
+        console.log("Connected - uploading...");
+        connection = c;
+        connection.on("data", function (d) {
+          document.getElementById('count').value = d;
+          console.log("Received " + JSON.stringify(d));
+        });
+        connection.write("reset();\n", function () {
+          // Wait for it to reset itself
+          setTimeout(function () {
+            connection.write(`\x10{
+                        var zero = Puck.mag();
+                        var rep = 0;
+                        function onMag(p) {
+                          p.x -= zero.x;
+                          p.y -= zero.y;
+                          p.z -= zero.z;
+                          var s = Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+                          if (!Boolean(s < 1000)) {
+                            digitalPulse(LED2, 1, 1000);
+                            rep++;
+                            Bluetooth.println(rep);
+                          }
+                        }
+                        Puck.on('mag', onMag);
+                        Puck.magOn();}\n`,
+              function () { console.log("Ready..."); });
+          }, 1500);
+        });
+      });
+    });
+  </script>
+
+  <input name="smname" id="count" />
+
+
+</body>
+
+
+
+
+</html>
