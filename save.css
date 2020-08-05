@@ -1,0 +1,42 @@
+h1 {font-family: 'Montserrat', sans-serif;
+    font-size: 60px;
+
+
+}
+
+label {font-family: 'Montserrat', sans-serif;}
+
+th {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.log { font-family: 'Montserrat', sans-serif;
+    background-color: #9e0828;
+    color: white;
+
+}
+
+.home {
+    width: 150px;
+    height: 60px;
+    background: #9e0828;
+    border: 4px;
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    right: 10%;
+    top: 4%;
+    padding-top: 5px;
+}
+
+.home:hover {
+    background: #9e0828;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+  }
