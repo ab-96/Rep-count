@@ -5,10 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-  <button id="btnId">Go</button>
+  <div class="block">
+    <button id="btnId">Start</button>
+    <button id="btnId2">Help</button>
+  </div>
+  <!-- This section is the code to connect the web bluetooth-->
   <script src="https://www.puck-js.com/puck.js"></script>
   <script>
     var connection;
@@ -25,41 +32,194 @@
         console.log("Connected - uploading...");
         connection = c;
         connection.on("data", function (d) {
-          document.getElementById('count').value = d;
+          if (Number.isInteger(parseInt(d))) {
+            document.getElementById("counter").innerHTML = d;
+          }
           console.log("Received " + JSON.stringify(d));
         });
         connection.write("reset();\n", function () {
-          // Wait for it to reset itself
+          // Wait for the puck to reset itself
           setTimeout(function () {
+            //This is the function for the rep count using the maganetometer
+            //It then returns the value in the console log
+
             connection.write(`\x10{
-                        var zero = Puck.mag();
-                        var rep = 0;
-                        function onMag(p) {
-                          p.x -= zero.x;
-                          p.y -= zero.y;
-                          p.z -= zero.z;
-                          var s = Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
-                          if (!Boolean(s < 1000)) {
-                            digitalPulse(LED2, 1, 1000);
-                            rep++;
-                            Bluetooth.println(rep);
+              
+                          var zero = Puck.mag();
+                          var rep = 0;
+                          function onMag(p) {
+                            p.x -= zero.x;
+                            p.y -= zero.y;
+                            p.z -= zero.z;
+                            var s = Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+                            if (!Boolean(s < 1000)) {
+                              digitalPulse(LED2, 1, 1000);
+                              rep++;
+                              Bluetooth.println(rep);
+                            }
                           }
-                        }
-                        Puck.on('mag', onMag);
-                        Puck.magOn();}\n`,
+                          Puck.on('mag', onMag);
+                          Puck.magOn();}\n`,
               function () { console.log("Ready..."); });
           }, 1500);
         });
       });
     });
+
   </script>
 
-  <input name="smname" id="count" />
+  <h1>Rep Counting System</h1>
+
+  <div id="box">
+    <p id="counter">0</p>
+  </div>
+
+  <a href="Save.html" class="btn">Save</a>
+  <button id="test" class="btn2" class onclick="resetCounter()">Reset</button>
+  <script>
+    function resetCounter() {
+        location.reload();  
+        
+    }
+</script>
+
+ 
+
+  <!--------------------------------- This section below is all CSS------------------------------------------------------>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      margin-top: 80px;
+      font-size: 60px;
+    }
+
+    #counter {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      font-size: 130px;
+      text-align: center;
+      margin-top: 75px;
+    }
+
+    #box {
+
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .btn {
+      width: 150px;
+      height: 60px;
+      background: #9e0828;
+      border: 4px;
+      color: black;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      line-height: 57px;
+      cursor: pointer;
+      font-size: 35px;
+      font-family: 'Montserrat', sans-serif;
+      position: absolute;
+      right: 50.3%;
+      top: 80%;
+    }
+
+    .btn2 {
+      width: 150px;
+      height: 60px;
+      background: #9e0828;
+      border: 4px;
+      color: black;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 35px;
+      font-family: 'Montserrat', sans-serif;
+      position: absolute;
+      right: 38.3%;
+      top: 80%;
+    }
+
+    .btn:hover {
+      background: #9e0828;
+      ;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .btn2:hover {
+      background: #9e0828;
+      ;
+      color: white;
+      transition: 0.3s;
+    }
+
+    #btnId {
+      width: 150px;
+      height: 80px;
+      background: white;
+      border: 4px;
+      color: black;
+      margin-left: 20px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 40px;
+      font-family: 'Montserrat', sans-serif;
+      position: absolute;
+      top: 10px;
+    }
+
+
+    #btnId:hover {
+      background: #9e0828;
+      color: white;
+      transition: 0.3s;
+
+    }
+
+    #btnId2:hover {
+      background: #9e0828;
+      color: white;
+      transition: 0.3s;
+    }
+
+    #btnId2 {
+      width: 150px;
+      margin-left: 20px;
+      height: 80px;
+      background: white;
+      border: 4px;
+      color: black;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 40px;
+      font-family: 'Montserrat', sans-serif;
+      position: absolute;
+      top: 15%;
+
+    }
+
+    .block {
+      width: 200px;
+      height: 100%;
+      background: #333;
+      border: 4px;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+    }
+  </style>
+
+
 
 
 </body>
-
-
-
 
 </html>
