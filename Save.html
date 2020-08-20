@@ -10,41 +10,37 @@
   <title>Save Workout</title>
 </head>
 
-<body>
-  
-  <a href="repCounter.html" class="home">Home</a>
+
+<a href="repCounter.html" class="home">Home</a>
 
   <div class="container mt-4">
     <h1>Save Workout</h1>
-    <form id="Workout-form">
+    <form id="workout-form">
       <div class="form-group">
-        <label for="Weight">Weight</label>
-        <input type="text" id="weight" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="sets">Set</label>
-        <input type="text" id="sets" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="reps">Reps</label>
-        <input type="text" id="reps" class="form-control">
-      </div>
-      <input type="submit" value="Log Workout" class="log">
-    </form>
-    <table class="table table-striped mt-5">
-      <thead>
-        <tr>
-          <th>Weight</th>
-          <th>Set</th>
-          <th>Reps</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="Workout"></tbody>
-    </table>
-  
-  <script type="text/javascript"  src="save.js" charset="utf-8" defer></script>
 
-</body>
-
-</html>
+          <label for="weight">Weight</label>
+          <input type="text" id="weight" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="sets">Sets</label>
+          <input type="text" id="sets" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="reps">Reps</label>
+          <input type="text" id="reps" class="form-control">
+        </div>
+        <input type="submit" value="Log Workout" class="log">
+      </form>
+      <table class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th>Weight</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="workout-list"></tbody>
+      </table>
+  </div>
+  <script type="text/javascript"  src="11.js" charset="utf-8" defer></script>
